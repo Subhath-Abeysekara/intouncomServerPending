@@ -71,4 +71,32 @@ public class docServiceImpl implements docService{
             return null;
         }
     }
+
+    @Override
+    public Long getLastImageId() {
+        List<docImage> docImages = docImageRepo.findAll();
+        Long latest = 0L;
+        for(docImage docImage : docImages){
+            if (docImage.getId()>latest){
+                latest=docImage.getId();
+            }
+        }
+        return latest+1;
+    }
+
+    @Override
+    public String deleteDocCat(Long id) {
+        try{
+            Optional<docCategories> docCategories = docCategoryRepo.findById(id);
+            List<docImage> docImages = docCategories.get().getDocImages();
+            for(docImage docImage : docImages){
+                docImageRepo.deleteByImageId(docImage.getId());
+            }
+            docCategoryRepo.deleteByDocId(id);
+            return "success";
+        }
+        catch (Exception e){
+            return "Error "+e;
+        }
+    }
 }

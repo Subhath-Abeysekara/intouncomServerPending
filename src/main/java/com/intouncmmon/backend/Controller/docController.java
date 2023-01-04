@@ -37,4 +37,14 @@ public class docController {
         return docService.getDocImagesByCat(id);
     }
 
+    @GetMapping("/getLastId")
+    private Long getLatest(){
+        return docService.getLastImageId();
+    }
+
+    @DeleteMapping("/doc/delete/{id}")
+    private String deleteDoc(@PathVariable Long id){
+        return docService.deleteDocCat(id);
+    }
+
 }

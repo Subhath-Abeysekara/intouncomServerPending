@@ -16,4 +16,8 @@ public interface docService {
     List<docCategories> getDocCats();
 
     List<docImage> getDocImagesByCat(Long id);
+
+    Long getLastImageId();
+
+    String deleteDocCat(Long id);
 }
