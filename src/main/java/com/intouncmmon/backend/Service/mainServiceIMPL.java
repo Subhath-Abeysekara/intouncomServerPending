@@ -125,7 +125,19 @@ public class mainServiceIMPL implements mainService{
 
     @Override
     public List<feedback> getFeedbacks() {
-        return feedbackRepo.findAll();
+        try{
+            List<feedback> feedbacks = feedbackRepo.findAll();
+            List<feedback> filterFeedbacks = new ArrayList<>();
+            for (feedback feedback : feedbacks){
+                if (!feedback.isCustomerShownStatus() && !feedback.isAdminShownStatus()){
+                    filterFeedbacks.add(feedback);
+                }
+            }
+            return filterFeedbacks;
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
     @Override
@@ -133,6 +145,7 @@ public class mainServiceIMPL implements mainService{
         Optional<feedback> feedback = feedbackRepo.findById(id);
         if (feedback.isPresent()){
             feedback.get().setAdminShownStatus(true);
+            feedbackRepo.save(feedback.get());
             return "success";
         }
         return "error";
