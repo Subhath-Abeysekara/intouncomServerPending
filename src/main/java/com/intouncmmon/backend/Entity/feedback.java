@@ -31,6 +31,8 @@ public class feedback {
 
     private boolean adminShownStatus = false;
 
+    private boolean customerShownStatus = false;
+
     public feedback() {
     }
 }

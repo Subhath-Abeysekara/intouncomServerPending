@@ -19,6 +19,10 @@ public interface mainService {
 
     List<feedback> getFeedbacks();
 
-    String setFeedbackStatus(Long id , String status);
+    String setFeedbackStatus(Long id );
+
+    List<feedback> getCustomerFeedbacks();
+
+    String setFeedbackStatusCustomerShown(Long id);
 
 }

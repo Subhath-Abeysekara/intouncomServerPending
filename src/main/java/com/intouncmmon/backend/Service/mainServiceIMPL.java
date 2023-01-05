@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Time;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Timer;
+import java.util.*;
 
 @Service
 public class mainServiceIMPL implements mainService{
@@ -132,10 +129,38 @@ public class mainServiceIMPL implements mainService{
     }
 
     @Override
-    public String setFeedbackStatus(Long id, String status) {
+    public String setFeedbackStatus(Long id) {
         Optional<feedback> feedback = feedbackRepo.findById(id);
         if (feedback.isPresent()){
             feedback.get().setAdminShownStatus(true);
+            return "success";
+        }
+        return "error";
+    }
+
+    @Override
+    public List<feedback> getCustomerFeedbacks() {
+       try{
+           List<feedback> feedbacks = feedbackRepo.findAll();
+           List<feedback> filterFeedbacks = new ArrayList<>();
+           for (feedback feedback : feedbacks){
+               if (feedback.isCustomerShownStatus()){
+                   filterFeedbacks.add(feedback);
+               }
+           }
+            return filterFeedbacks;
+       }
+       catch (Exception e){
+           return null;
+       }
+    }
+
+    @Override
+    public String setFeedbackStatusCustomerShown(Long id) {
+        Optional<feedback> feedback = feedbackRepo.findById(id);
+        if (feedback.isPresent()){
+            feedback.get().setCustomerShownStatus(true);
+            feedbackRepo.save(feedback.get());
             return "success";
         }
         return "error";

@@ -47,8 +47,18 @@ public class mainController {
         return mainService.getFeedbacks();
     }
 
-    @PutMapping("/setFeedbackState/{id}/{status}")
-    public String setFeedbackAdminStatus(@PathVariable Long id , @PathVariable String status){
-        return mainService.setFeedbackStatus(id, status);
+    @GetMapping("/getFeedbacks/customer")
+    public List<feedback> getFeedbacksCustomer(){
+        return mainService.getCustomerFeedbacks();
+    }
+
+    @PutMapping("/setFeedbackState/{id}")
+    public String setFeedbackAdminStatus(@PathVariable Long id){
+        return mainService.setFeedbackStatus(id);
+    }
+
+    @PutMapping("/setFeedbackState/customer/{id}")
+    public String setFeedbackCustomerStatus(@PathVariable Long id){
+        return mainService.setFeedbackStatusCustomerShown(id);
     }
 }
